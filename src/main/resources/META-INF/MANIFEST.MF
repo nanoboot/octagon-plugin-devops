@@ -1,0 +1,1 @@
+Plugin-Class: org.nanoboot.octagon.plugin.devops.plugin.DevopsPlugin

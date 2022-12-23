@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Octagon Plugin DevOps: DevOps plugin for Octagon application.
+ Copyright (C) 2021-2022 the original author or authors.
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; version 2
+ of the License only.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.nanoboot.octagon.plugin.devops.persistence.impl.mappers.UserKanbanBoardMapper">
+
+    <resultMap id="userKanbanBoardResultMap" type="org.nanoboot.octagon.plugin.devops.classes.UserKanbanBoard">
+        <id property="id" column="ID"
+            typeHandler="org.nanoboot.octagon.entity.typehandlers.UUIDTypeHandler"/>
+        <result property="name" column="NAME"/>
+        <result property="projectId" 
+                typeHandler="org.nanoboot.octagon.entity.typehandlers.UUIDTypeHandler" column="PROJECT_ID"/>
+        <result property="userId" 
+                typeHandler="org.nanoboot.octagon.entity.typehandlers.UUIDTypeHandler" column="USER_ID"/>
+        <result property="data" column="DATA"/>
+    </resultMap>
+
+    <sql id="userKanbanBoardColumns">
+        "ID", "NAME", "PROJECT_ID", "USER_ID", "DATA"
+    </sql>
+
+    <insert id="create" parameterType="org.nanoboot.octagon.plugin.devops.classes.UserKanbanBoard">
+        INSERT INTO "USER_KANBAN_BOARD" (<include refid="userKanbanBoardColumns"/>)
+        VALUES
+        (
+        #{id},
+        #{name},
+        #{projectId},
+        #{userId},
+        #{data}
+        )
+    </insert>
+
+    <select id="read" parameterType="String" resultMap="userKanbanBoardResultMap">
+        SELECT
+        <include refid="userKanbanBoardColumns"/>
+        FROM "USER_KANBAN_BOARD"
+        WHERE "ID" = #{id}
+    </select>
+
+    <update id="update" parameterType="org.nanoboot.octagon.plugin.devops.classes.UserKanbanBoard">
+        UPDATE "USER_KANBAN_BOARD" SET
+        "ID"=#{id},
+        "NAME"=#{name},
+        "PROJECT_ID"=#{projectId},
+        "USER_ID"=#{userId},
+        "DATA"=#{data}
+
+        WHERE "ID" = #{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+            DELETE FROM "USER_KANBAN_BOARD"
+            WHERE "ID" = #{id}
+    </delete>
+
+    <select id="list" parameterType="String" resultMap="userKanbanBoardResultMap">
+        SELECT
+        <include refid="userKanbanBoardColumns"/>
+        FROM "USER_KANBAN_BOARD"
+        WHERE ${value}
+    </select>
+
+
+    <!-- Labels -->
+    <resultMap id="labelResultMap" type="org.nanoboot.octagon.entity.classes.EntityLabel">
+        <id property="id" column="ID"/>
+        <result property="label" column="NAME"/>
+    </resultMap>
+
+    <sql id="labelColumns">
+        "ID", "NAME"
+    </sql>
+
+    <select id="getLabel" parameterType="String" resultType="String">
+        SELECT
+            "NAME"
+        FROM "USER_KANBAN_BOARD"
+        WHERE "ID" = #{id}
+    </select>
+    <select id="getLabels" resultMap="labelResultMap">
+        SELECT
+        <include refid="labelColumns"/>
+        FROM "USER_KANBAN_BOARD"
+    </select>
+</mapper>

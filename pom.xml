@@ -1,0 +1,106 @@
+<!--
+ Octagon Plugin DevOps: DevOps plugin for Octagon application.
+ Copyright (C) 2021-2022 the original author or authors.
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; version 2
+ of the License only.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+-->
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.nanoboot.octagon</groupId>
+        <artifactId>octagon-plugin-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>octagon-plugin-devops</artifactId>
+    <packaging>jar</packaging>
+    <version>0.1.0-SNAPSHOT</version>
+    <name>octagon plugin devops</name>
+    <description>description</description>
+    <properties>
+        
+        <octagon-plugin-development.version>0.1.0-SNAPSHOT</octagon-plugin-development.version>
+        <octagon-plugin-task.version>0.1.0-SNAPSHOT</octagon-plugin-task.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>add-resource</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources/db_migrations/sqlite/devops</directory>
+                                    <targetPath>db_migrations/sqlite/devops</targetPath>
+                                    <includes>
+                                        <include>*.sql</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.nanoboot.powerframework</groupId>
+            <artifactId>power-time</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nanoboot.powerframework</groupId>
+            <artifactId>power-json</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nanoboot.octagon</groupId>
+            <artifactId>octagon-plugin-development</artifactId>
+            <version>${octagon-plugin-development.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.nanoboot.octagon</groupId>
+            <artifactId>octagon-plugin-task</artifactId>
+            <version>${octagon-plugin-task.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.nanoboot.octagon</groupId>
+            <artifactId>octagon-plugin-main</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nanoboot.powerframework</groupId>
+            <artifactId>power-xml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nanoboot.powerframework</groupId>
+            <artifactId>power-web</artifactId>
+        </dependency>
+    </dependencies>
+    <repositories>
+
+    </repositories>
+</project>
